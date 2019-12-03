@@ -1,6 +1,8 @@
-import React from "react";
-import { Text } from "react-native";
+import React from 'react';
+import { Text } from 'react-native';
 
-export default function HomeView(props) {
+const HomeView = () => {
     return <Text>Home</Text>;
-}
+};
+
+export { HomeView };

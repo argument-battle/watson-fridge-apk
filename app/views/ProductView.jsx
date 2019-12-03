@@ -1,6 +1,8 @@
-import React from "react";
-import { Text } from "react-native";
+import React from 'react';
+import { Text } from 'react-native';
 
-export default function ProductView(props) {
+const ProductView = () => {
     return <Text>Product</Text>;
-}
+};
+
+export { ProductView };
