@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { Navigator } from './app/Navigator';
+import { Navigator } from './app/navigator/Navigator';
 import { theme } from './app/Theme';
 
 const App = () => (

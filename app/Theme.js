@@ -1,12 +1,14 @@
 import { DefaultTheme } from 'react-native-paper';
 //https://github.com/callstack/react-native-paper/blob/master/src/styles/DefaultTheme.tsx
 
+const primaryColor = '#F1C40F';
+
 const theme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#F1C40F'
+        primary: primaryColor
     }
 };
 
-export { theme };
+export { theme, primaryColor };
