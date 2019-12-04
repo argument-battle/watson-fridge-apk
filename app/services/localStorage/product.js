@@ -8,7 +8,7 @@ async function get(productId) {
 
 async function getAll() {
     try {
-        const products = (await AsyncStorage.getItem('products')) || [];
+        const products = (await AsyncStorage.getItem('products')) || '[]';
         return JSON.parse(products);
     } catch (error) {
         console.error(error);

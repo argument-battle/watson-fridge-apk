@@ -5,6 +5,8 @@ import GlobalStyles from '../../modules/GlobalStyles';
 import { ROUTE_NAMES } from '../../constants';
 import { primaryColor } from '../../Theme';
 import logo from '../../assets/logoAlpha.png';
+import { loadTestData } from '../../modules/TestDataLoader';
+import productStorage from '../../services/localStorage/product';
 
 const styles = StyleSheet.create({
     conatainer: {
@@ -42,6 +44,25 @@ const Drawer = ({ navigation }) => {
                 icon="chef-hat"
                 onPress={() => console.log('pressed receptai')}
             />
+            {__DEV__ && (
+                <PaperDrawer.Section title="DEV: Storage">
+                    <PaperDrawer.Item
+                        label="Load test data"
+                        icon="test-tube"
+                        onPress={() => loadTestData()}
+                    />
+                    <PaperDrawer.Item
+                        label="Log product storage"
+                        icon="test-tube-empty"
+                        onPress={async () => console.log(await productStorage.getAll())}
+                    />
+                    <PaperDrawer.Item
+                        label="Delete test data"
+                        icon="test-tube-off"
+                        onPress={async () => await productStorage.removeAll()}
+                    />
+                </PaperDrawer.Section>
+            )}
         </SafeAreaView>
     );
 };

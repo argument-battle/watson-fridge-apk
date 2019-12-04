@@ -36,6 +36,9 @@ module.exports = {
             { name: 'Link', linkAttribute: 'to' }
         ]
     },
+    globals: {
+        __DEV__: 'readonly'
+    },
     rules: {
         'react/prop-types': 0,
         'react-hooks/rules-of-hooks': 'error',
