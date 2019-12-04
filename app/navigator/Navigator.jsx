@@ -6,8 +6,8 @@ import { ROUTE_NAMES } from '../constants';
 import { Drawer } from './components/Drawer';
 import { AppBar } from './components/AppBar';
 
-import { HomeView } from '../views/HomeView';
-import { ProductView } from '../views/ProductView';
+import { HomeView } from '../views/HomeView/HomeView';
+import { ProductView } from '../views/ProductView/ProductView';
 // Remaining views here
 
 const StackNavigator = createStackNavigator(
