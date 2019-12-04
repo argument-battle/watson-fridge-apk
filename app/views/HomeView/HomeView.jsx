@@ -15,16 +15,14 @@ const HomeView = props => {
             amount: '490 g',
             expiryDate: new Date(2019, 11, 8)
         },
-        {
-            title: 'Šokoladas "Milka"',
-            amount: '100 g',
-            expiryDate: new Date(2019, 11, 6)
-        },
-        { title: 'Krevetės', amount: '350 g.', expiryDate: new Date(2019, 11, 4) }
+        { title: 'Kefyras', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
+        { title: 'Pasukos', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
+        { title: 'Kebabai', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
+        { title: 'Triedalai', amount: '900 ml', expiryDate: new Date(2019, 11, 4) }
     ];
 
     return (
-        <View>
+        <View style={styles.home}>
             <FlatList
                 keyExtractor={item => item.title}
                 data={testProductList}
@@ -48,12 +46,16 @@ const HomeView = props => {
 };
 
 const styles = StyleSheet.create({
+    home: {
+        flex: 1
+    },
     fab: {
         backgroundColor: '#3cb371',
         position: 'absolute',
         margin: 16,
         right: 0,
-        bottom: 0
+        bottom: 0,
+        alignSelf: 'flex-end'
     }
 });
 
