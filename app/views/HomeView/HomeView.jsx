@@ -1,38 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import { FAB, Colors } from 'react-native-paper';
 import ProductListItem from '../HomeView/components/ProductListItem';
+import productStorage from '../../services/localStorage/product';
 
-const HomeView = props => {
-    const testProductList = [
-        { title: 'Apelsinai', amount: '500 g', expiryDate: new Date(2019, 11, 13) },
-        { title: 'Obuoliai', amount: '450 g', expiryDate: new Date(2019, 11, 12) },
-        { title: 'Bananai', amount: '1 kg', expiryDate: new Date(2019, 11, 11) },
-        { title: 'Morkos', amount: '1 kg', expiryDate: new Date(2019, 11, 10) },
-        { title: 'Pienas', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
-        {
-            title: 'Pomidorų Padažas',
-            amount: '490 g',
-            expiryDate: new Date(2019, 11, 8)
-        },
-        { title: 'Kefyras', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
-        { title: 'Pasukos', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
-        { title: 'Kebabai', amount: '900 ml', expiryDate: new Date(2019, 11, 4) },
-        { title: 'Triedalai', amount: '900 ml', expiryDate: new Date(2019, 11, 4) }
-    ];
+const HomeView = ({ navigation }) => {
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    async function getProducts() {
+        const products = await productStorage.getAll();
+        setProducts(products);
+    }
     return (
         <View style={styles.home}>
             <FlatList
-                keyExtractor={item => item.title}
-                data={testProductList}
+                keyExtractor={item => item._id}
+                data={products}
                 renderItem={({ item }) => (
-                    <ProductListItem
-                        title={item.title}
-                        description={item.amount}
-                        expiryDate={item.expiryDate}
-                        {...props}
-                    />
+                    <ProductListItem product={item} navigation={navigation} />
                 )}
             />
             <FAB

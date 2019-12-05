@@ -19,16 +19,19 @@ const setColorBasedOnExpiryDate = expiryDate => {
     return '#3cb371';
 };
 
-const ProductListItem = ({ title, description, expiryDate, navigation }) => {
+const ProductListItem = ({ product = {}, navigation }) => {
+    const { _id, title, expiryDate: _expiryDate, amount, measurement } = product;
+    const expiryDate = new Date(_expiryDate);
+    console.log(_id);
     return (
         <List.Item
             title={title}
-            description={description}
+            description={`${amount} ${measurement}`}
             left={props => (
                 <List.Icon {...props} color={setColorBasedOnExpiryDate(expiryDate)} icon="clock" />
             )}
             style={styles.listItem}
-            onPress={() => navigation.navigate('Product', { title, description, expiryDate })}
+            onPress={() => navigation.navigate('Product', { id: _id })}
         />
     );
 };

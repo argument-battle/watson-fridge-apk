@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import productStorage from '../../services/localStorage/product';
 
 const ProductView = ({ navigation }) => {
-    const title = navigation.getParam('title', 'No title provided');
-    const description = navigation.getParam('description', 'No description provided');
-    const expiryDate = navigation.getParam('expiryDate', 'No date provided');
+    const id = navigation.getParam('id', '');
+    const [product, setProduct] = useState({});
 
+    useEffect(() => {
+        getProduct(id);
+    }, [id]);
+
+    async function getProduct(id) {
+        const product = await productStorage.get(id);
+        setProduct(product);
+    }
+
+    const { title, amount } = product;
+    const expiryDate = new Date(product.expiryDate);
     const day = expiryDate.getDate();
     const month = expiryDate.getMonth() + 1;
     const year = expiryDate.getFullYear();
@@ -18,7 +29,7 @@ const ProductView = ({ navigation }) => {
             <Text style={styles.label}>{'Galioja iki'}</Text>
             <Text style={styles.detail}>{`${year}-${month}-${day}`}</Text>
             <Text style={styles.label}>{`Kiekis`}</Text>
-            <Text style={styles.detail}>{`${description}`}</Text>
+            <Text style={styles.detail}>{`${amount}`}</Text>
         </View>
     );
 };
