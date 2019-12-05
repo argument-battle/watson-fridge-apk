@@ -17,7 +17,7 @@ const ProductView = ({ navigation }) => {
         setProduct(product);
     }
 
-    const { title, amount } = product;
+    const { title, amount, measurement } = product;
 
     const remove = async () => {
         await productStorage.remove(id);
@@ -65,7 +65,7 @@ const ProductView = ({ navigation }) => {
             <Text style={styles.label}>{'Galioja iki'}</Text>
             <Text style={styles.detail}>{`${year}-${month}-${day}`}</Text>
             <Text style={styles.label}>{`Kiekis`}</Text>
-            <Text style={styles.detail}>{`${amount}`}</Text>
+            <Text style={styles.detail}>{`${amount} ${measurement}`}</Text>
         </View>
     );
 };
