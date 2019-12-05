@@ -1,7 +1,9 @@
 const ROUTE_NAMES = {
     HOME: 'Home',
     PRODUCT: 'Product',
-    ADDPRODUCT: 'Add product'
+    ADDP_RODUCT: 'Add product',
+    RECIPE_SEARTCH: 'Recipe search',
+    SELECT_PRODUCT: 'Select a product'
 };
 
 const MEASURING_UNITS = {

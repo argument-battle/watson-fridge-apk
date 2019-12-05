@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { FAB, Colors } from 'react-native-paper';
-import ProductListItem from '../HomeView/components/ProductListItem';
-import productStorage from '../../services/localStorage/product';
+import { ProductList } from '../../components/ProductList';
 import { ROUTE_NAMES } from '../../constants';
 
 const HomeView = ({ navigation }) => {
-    const [products, setProducts] = useState([]);
+    const onProductPress = product => {
+        const id = product?._id;
+        navigation.navigate(ROUTE_NAMES.PRODUCT, { id });
+    };
 
-    useEffect(() => {
-        getProducts();
-    }, []);
-
-    async function getProducts() {
-        const products = await productStorage.getAll();
-        setProducts(products);
-    }
     return (
         <View style={styles.home}>
-            <FlatList
-                keyExtractor={item => item._id}
-                data={products}
-                renderItem={({ item }) => (
-                    <ProductListItem product={item} navigation={navigation} />
-                )}
-            />
+            <ProductList {...{ onProductPress }} />
             <FAB
                 style={styles.fab}
                 color={Colors.white}
                 icon="plus"
-                onPress={() => navigation.navigate(ROUTE_NAMES.ADDPRODUCT)}
+                onPress={() => navigation.navigate(ROUTE_NAMES.ADDP_RODUCT)}
             />
         </View>
     );

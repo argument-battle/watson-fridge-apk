@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, HelperText, Colors } from 'react-native-paper';
 import { TextInputMask } from 'react-native-masked-text';
 import { Dropdown } from 'react-native-material-dropdown';
-import { PRODUCT_TYPES, MEASURING_UNITS, ROUTE_NAMES } from '../../../constants';
+import { PRODUCT_TYPES, MEASURING_UNITS } from '../../../constants';
 import { theme } from '../../../Theme';
 import productStorage from '../../../services/localStorage/product';
 
@@ -32,7 +32,7 @@ function parseDate(dateString) {
     return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 }
 
-export default function AddProductForm({ navigation }) {
+export default function AddProductForm({ onSuccess }) {
     const [inputs, setInputs] = useState({
         title: {
             value: '',
@@ -66,8 +66,8 @@ export default function AddProductForm({ navigation }) {
 
     async function handleFormSubmit() {
         if (validateForm()) {
-            const productId = await saveNewProduct();
-            navigation.navigate(ROUTE_NAMES.PRODUCT, { id: productId });
+            await saveNewProduct();
+            onSuccess();
         }
     }
 

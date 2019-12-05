@@ -1,11 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 import AddProductForm from './components/AddProductForm';
+import { ROUTE_NAMES } from '../../constants';
 
-function AddProductView(props) {
+function AddProductView({ navigation }) {
+    const onSuccess = () => {
+        navigation.navigate(ROUTE_NAMES.HOME);
+    };
     return (
         <View>
-            <AddProductForm navigation={props.navigation} />
+            <AddProductForm {...{ onSuccess }} />
         </View>
     );
 }

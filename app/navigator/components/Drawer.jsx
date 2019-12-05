@@ -40,9 +40,9 @@ const Drawer = ({ navigation }) => {
                 onPress={() => navigate(ROUTE_NAMES.HOME)}
             />
             <PaperDrawer.Item
-                label="Receptai"
+                label={ROUTE_NAMES.RECIPE_SEARTCH}
                 icon="chef-hat"
-                onPress={() => console.log('pressed receptai')}
+                onPress={() => navigate(ROUTE_NAMES.RECIPE_SEARTCH)}
             />
             {__DEV__ && (
                 <PaperDrawer.Section title="DEV: Storage">
