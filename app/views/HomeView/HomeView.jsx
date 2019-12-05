@@ -17,7 +17,7 @@ const HomeView = ({ navigation }) => {
                 style={styles.fab}
                 color={Colors.white}
                 icon="plus"
-                onPress={() => navigation.navigate(ROUTE_NAMES.ADDP_RODUCT)}
+                onPress={() => navigation.navigate(ROUTE_NAMES.ADD_PRODUCT)}
             />
         </View>
     );

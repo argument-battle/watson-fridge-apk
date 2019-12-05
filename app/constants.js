@@ -1,7 +1,7 @@
 const ROUTE_NAMES = {
     HOME: 'Home',
     PRODUCT: 'Product',
-    ADDP_RODUCT: 'Add product',
+    ADD_PRODUCT: 'Add product',
     RECIPE_SEARTCH: 'Recipe search',
     SELECT_PRODUCT: 'Select a product'
 };

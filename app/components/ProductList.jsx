@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { ProductListItem } from './ProductListItem';
 import productStorage from '../services/localStorage/product';
+import { NavigationEvents } from 'react-navigation';
 
 const ProductList = ({ onProductPress = () => {}, exludedProducts = [] }) => {
     const [products, _setProducts] = useState([]);
@@ -22,11 +23,16 @@ const ProductList = ({ onProductPress = () => {}, exludedProducts = [] }) => {
         setProducts(products);
     }
     return (
-        <FlatList
-            keyExtractor={item => item._id}
-            data={products}
-            renderItem={({ item }) => <ProductListItem product={item} onPress={onProductPress} />}
-        />
+        <>
+            <NavigationEvents onWillFocus={getProducts} />
+            <FlatList
+                keyExtractor={item => item._id}
+                data={products}
+                renderItem={({ item }) => (
+                    <ProductListItem product={item} onPress={onProductPress} />
+                )}
+            />
+        </>
     );
 };
 

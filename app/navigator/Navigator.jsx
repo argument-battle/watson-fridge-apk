@@ -16,7 +16,7 @@ const StackNavigator = createStackNavigator(
     {
         [ROUTE_NAMES.HOME]: { screen: HomeView },
         [ROUTE_NAMES.PRODUCT]: { screen: ProductView },
-        [ROUTE_NAMES.ADDP_RODUCT]: { screen: AddProductView },
+        [ROUTE_NAMES.ADD_PRODUCT]: { screen: AddProductView },
         [ROUTE_NAMES.RECIPE_SEARTCH]: { screen: RecipeSearchView },
         [ROUTE_NAMES.SELECT_PRODUCT]: { screen: SelectProductView }
     },
