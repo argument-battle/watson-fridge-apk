@@ -8,12 +8,13 @@ import { AppBar } from './components/AppBar';
 
 import { HomeView } from '../views/HomeView/HomeView';
 import { ProductView } from '../views/ProductView/ProductView';
-// Remaining views here
+import { AddProductView } from '../views/AddProductView/AddProductView';
 
 const StackNavigator = createStackNavigator(
     {
         [ROUTE_NAMES.HOME]: { screen: HomeView },
-        [ROUTE_NAMES.PRODUCT]: { screen: ProductView }
+        [ROUTE_NAMES.PRODUCT]: { screen: ProductView },
+        [ROUTE_NAMES.ADDPRODUCT]: { screen: AddProductView }
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({

@@ -41,6 +41,7 @@ async function set(product) {
         product._id = nanoid();
 
         await AsyncStorage.setItem('products', JSON.stringify([...products, product]));
+        return product._id;
     } catch (error) {
         console.error(error);
     }

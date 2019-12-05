@@ -1,6 +1,13 @@
 const ROUTE_NAMES = {
     HOME: 'Home',
-    PRODUCT: 'Product'
+    PRODUCT: 'Product',
+    ADDPRODUCT: 'Add product'
+};
+
+const MEASURING_UNITS = {
+    AMOUNT: 'qnt.',
+    CAPACITY: 'ml.',
+    WEIGHT: 'g.'
 };
 
 const PRODUCT_TYPES = {
@@ -18,4 +25,4 @@ const PRODUCT_TYPES = {
     SHRIMP: 'shrimp'
 };
 
-export { ROUTE_NAMES, PRODUCT_TYPES };
+export { ROUTE_NAMES, PRODUCT_TYPES, MEASURING_UNITS };

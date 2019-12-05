@@ -3,6 +3,7 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import { FAB, Colors } from 'react-native-paper';
 import ProductListItem from '../HomeView/components/ProductListItem';
 import productStorage from '../../services/localStorage/product';
+import { ROUTE_NAMES } from '../../constants';
 
 const HomeView = ({ navigation }) => {
     const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ const HomeView = ({ navigation }) => {
                 style={styles.fab}
                 color={Colors.white}
                 icon="plus"
-                onPress={() => console.log('Pressed')}
+                onPress={() => navigation.navigate(ROUTE_NAMES.ADDPRODUCT)}
             />
         </View>
     );

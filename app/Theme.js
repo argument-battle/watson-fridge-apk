@@ -7,7 +7,8 @@ const theme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: primaryColor
+        primary: primaryColor,
+        disabled: DefaultTheme.colors.placeholder
     }
 };
 
