@@ -1,30 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import React from 'react';
+import { View, FlatList } from 'react-native';
 import { ProductListItem } from './ProductListItem';
-import productStorage from '../services/localStorage/product';
-import { NavigationEvents } from 'react-navigation';
 
-const ProductList = ({ onProductPress = () => {}, exludedProducts = [] }) => {
-    const [products, _setProducts] = useState([]);
-    const setProducts = products => {
-        let filteredProducts = products;
-        exludedProducts.forEach(exluded => {
-            filteredProducts = filteredProducts.filter(product => exluded._id !== product._id);
-        });
-        _setProducts(filteredProducts);
-    };
-
-    useEffect(() => {
-        getProducts();
-    }, []);
-
-    async function getProducts() {
-        const products = await productStorage.getAll();
-        setProducts(products);
-    }
+const ProductList = ({ onProductPress = () => {}, products = [] }) => {
     return (
-        <>
-            <NavigationEvents onWillFocus={getProducts} />
+        <View>
             <FlatList
                 keyExtractor={item => item._id}
                 data={products}
@@ -32,7 +12,7 @@ const ProductList = ({ onProductPress = () => {}, exludedProducts = [] }) => {
                     <ProductListItem product={item} onPress={onProductPress} />
                 )}
             />
-        </>
+        </View>
     );
 };
 

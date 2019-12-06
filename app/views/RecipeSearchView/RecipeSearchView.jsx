@@ -1,12 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, Colors } from 'react-native-paper';
 import { ProductChipsContainer } from './components/ProductChipsContainer';
 import { ROUTE_NAMES } from '../../constants';
 import { Linking } from 'expo';
+import productStorage from '../../services/localStorage/product';
 
 const styles = StyleSheet.create({
-    conatainer: {
+    container: {
         padding: 30
     },
     chipsContainer: {
@@ -19,7 +20,23 @@ const styles = StyleSheet.create({
 });
 
 const RecipeSearchView = ({ navigation }) => {
+    const [products, setProducts] = useState([]);
     const [includedProducts, setIncludedProducts] = useState([]);
+    const [excludedProducts, setExcludedProducts] = useState([]);
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    async function getProducts() {
+        const products = await productStorage.getAll();
+        setProducts(products);
+    }
+
+    const removeFromArray = (arr, item) => {
+        return arr.filter(_item => _item._id !== item._id);
+    };
+
     const includeProduct = useCallback(
         product => {
             setIncludedProducts([...includedProducts, product]);
@@ -27,7 +44,6 @@ const RecipeSearchView = ({ navigation }) => {
         [setIncludedProducts, includedProducts]
     );
 
-    const [excludedProducts, setExcludedProducts] = useState([]);
     const excludeProduct = useCallback(
         product => {
             setExcludedProducts([...excludedProducts, product]);
@@ -35,11 +51,19 @@ const RecipeSearchView = ({ navigation }) => {
         [setExcludedProducts, excludedProducts]
     );
 
-    const selectedProducts = [...includedProducts, ...excludedProducts];
+    const removeIncludedProduct = useCallback(
+        product => {
+            setIncludedProducts(removeFromArray(includedProducts, product));
+        },
+        [setIncludedProducts, includedProducts]
+    );
 
-    const remove = (arr, setter) => value => {
-        setter(arr.filter(e => e._id !== value._id));
-    };
+    const removeExludedProduct = useCallback(
+        product => {
+            setExcludedProducts(removeFromArray(excludedProducts, product));
+        },
+        [setExcludedProducts, excludedProducts]
+    );
 
     const searchRecipes = () => {
         const includedValues = includedProducts.map(e => e.type).join(',');
@@ -49,8 +73,15 @@ const RecipeSearchView = ({ navigation }) => {
         Linking.openURL(`${mainUrl}?ingIncl=${includedValues}&ingExcl=${excludedValues}&sort=re`);
     };
 
+    const getRemainingProducts = () => {
+        const selectedProductsIds = [...includedProducts, ...excludedProducts].map(
+            product => product._id
+        );
+        return products.filter(product => !selectedProductsIds.includes(product._id));
+    };
+
     return (
-        <ScrollView style={styles.conatainer}>
+        <ScrollView style={styles.container}>
             <Button
                 style={styles.button}
                 icon="plus-circle"
@@ -58,7 +89,7 @@ const RecipeSearchView = ({ navigation }) => {
                 onPress={() =>
                     navigation.navigate(ROUTE_NAMES.SELECT_PRODUCT, {
                         includeProduct,
-                        selectedProducts
+                        products: getRemainingProducts()
                     })
                 }
             >
@@ -67,7 +98,7 @@ const RecipeSearchView = ({ navigation }) => {
             <ProductChipsContainer
                 style={styles.chipsContainer}
                 products={includedProducts}
-                onRemove={remove(includedProducts, setIncludedProducts)}
+                onRemove={removeIncludedProduct}
             />
             <Button
                 style={styles.button}
@@ -76,7 +107,7 @@ const RecipeSearchView = ({ navigation }) => {
                 onPress={() =>
                     navigation.navigate(ROUTE_NAMES.SELECT_PRODUCT, {
                         excludeProduct,
-                        selectedProducts
+                        products: getRemainingProducts()
                     })
                 }
             >
@@ -85,7 +116,7 @@ const RecipeSearchView = ({ navigation }) => {
             <ProductChipsContainer
                 style={styles.chipsContainer}
                 products={excludedProducts}
-                onRemove={remove(excludedProducts, setExcludedProducts)}
+                onRemove={removeExludedProduct}
             />
             <Button icon="magnify" mode="contained" onPress={searchRecipes}>
                 Search

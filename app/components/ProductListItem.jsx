@@ -20,7 +20,7 @@ const setColorBasedOnExpiryDate = expiryDate => {
 };
 
 const ProductListItem = ({ product = {}, onPress = () => {} }) => {
-    const { _id, title, expiryDate: _expiryDate, amount, measurement } = product;
+    const { title, expiryDate: _expiryDate, amount, measurement } = product;
     const expiryDate = new Date(_expiryDate);
     return (
         <List.Item

@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
 const ProductChipsContainer = ({ products = [], onRemove = () => {}, style }) => {
     return (
         <View style={[styles.chipBox, style]}>
-            {products.map((e, i) => (
-                <Chip key={i} style={styles.chip} mode="flat" onClose={() => onRemove(e)}>
-                    {e.title}
+            {products.map((product, index) => (
+                <Chip key={index} style={styles.chip} mode="flat" onClose={() => onRemove(product)}>
+                    {product.title}
                 </Chip>
             ))}
         </View>

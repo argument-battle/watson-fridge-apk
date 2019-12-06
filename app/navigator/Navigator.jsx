@@ -9,7 +9,7 @@ import { AppBar } from './components/AppBar';
 import { HomeView } from '../views/HomeView/HomeView';
 import { ProductView } from '../views/ProductView/ProductView';
 import { AddProductView } from '../views/AddProductView/AddProductView';
-import { RecipeSearchView } from '../views/RecipeSeatchView/RecipeSearchView';
+import { RecipeSearchView } from '../views/RecipeSearchView/RecipeSearchView';
 import { SelectProductView } from '../views/SelectProductView/SelectProductView';
 import { BarcodeScannerView } from '../views/BarcodeScannerView/BarcodeScannerView';
 

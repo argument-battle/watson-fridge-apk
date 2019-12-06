@@ -5,9 +5,9 @@ import { ProductList } from '../../components/ProductList';
 const SelectProductView = ({ navigation }) => {
     const { getParam, goBack } = navigation;
 
-    const exludedProducts = getParam('selectedProducts');
     const includeProduct = getParam('includeProduct');
     const excludeProduct = getParam('excludeProduct');
+    const products = getParam('products', []);
 
     const onProductPress = product => {
         if (includeProduct) {
@@ -21,7 +21,7 @@ const SelectProductView = ({ navigation }) => {
 
     return (
         <View>
-            <ProductList {...{ onProductPress, exludedProducts }} />
+            <ProductList {...{ onProductPress, products }} />
         </View>
     );
 };
