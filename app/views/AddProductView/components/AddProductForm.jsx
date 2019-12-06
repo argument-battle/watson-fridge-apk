@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, HelperText, Colors } from 'react-native-paper';
 import { TextInputMask } from 'react-native-masked-text';
@@ -32,37 +32,32 @@ function parseDate(dateString) {
     return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 }
 
-export default function AddProductForm({ navigate }) {
-    const [inputs, setInputs] = useState({
-        title: {
-            value: '',
-            error: ''
-        },
-        expiryDate: {
-            value: '',
-            error: ''
-        },
-        amount: {
-            value: '',
-            error: ''
-        },
-        measurement: {
-            value: '' || MEASURING_UNITS.WEIGHT,
-            error: ''
-        },
-        type: {
-            value: '',
-            error: ''
-        }
-    });
-    const { title, expiryDate, amount, measurement, type } = inputs;
-    let expiryDateField;
+const initialValues = {
+    title: '',
+    expiryDate: '',
+    amount: '',
+    measurement: MEASURING_UNITS.WEIGHT,
+    type: ''
+};
 
-    function handleInputChange(inputName, value) {
-        inputs[inputName].error = '';
-        inputs[inputName].value = value;
-        setInputs({ ...inputs });
-    }
+const AddProductForm = ({ navigate, defaultValues }) => {
+    const initialInputs = useMemo(
+        () =>
+            Object.entries(defaultValues || initialValues).reduce((prev, [key, value]) => {
+                const stringValue = value.toString();
+                return { ...prev, [key]: { value: stringValue, error: '' } };
+            }, {}),
+        [defaultValues]
+    );
+
+    const [inputs, setInputs] = useState(initialInputs);
+
+    const { title, expiryDate, amount, measurement, type } = inputs;
+    const expiryDateFieldRef = useRef(null);
+
+    const handleChange = inputName => value => {
+        setInputs({ ...inputs, [inputName]: { value, error: '' } });
+    };
 
     async function handleFormSubmit() {
         if (validateForm()) {
@@ -106,7 +101,7 @@ export default function AddProductForm({ navigate }) {
 
     function validateExpiryDate() {
         let isValid = true;
-        if (expiryDateField.isValid() && isDateGreaterThanToday(expiryDate.value)) {
+        if (expiryDateFieldRef.current.isValid() && isDateGreaterThanToday(expiryDate.value)) {
             inputs.expiryDate.error = '';
         } else {
             inputs.expiryDate.error = 'Wrong date format.';
@@ -120,9 +115,9 @@ export default function AddProductForm({ navigate }) {
         <View>
             <View>
                 <TextInput
-                    text={title.value}
+                    value={title.value}
                     label="Title"
-                    onChangeText={text => handleInputChange('title', text)}
+                    onChangeText={handleChange('title')}
                     error={title.error}
                     style={styles.textInput}
                 />
@@ -132,19 +127,17 @@ export default function AddProductForm({ navigate }) {
             </View>
             <View>
                 <TextInput
-                    text={expiryDate.value}
+                    value={expiryDate.value}
                     label="Expiration date"
                     style={styles.textInput}
-                    onChangeText={text => handleInputChange('expiryDate', text)}
+                    onChangeText={handleChange('expiryDate')}
                     error={expiryDate.error}
                     render={props => (
                         <TextInputMask
                             {...props}
                             type={'datetime'}
-                            options={{
-                                format: 'DD/MM/YYYY'
-                            }}
-                            ref={ref => (expiryDateField = ref)}
+                            options={{ format: 'DD/MM/YYYY' }}
+                            ref={expiryDateFieldRef}
                         />
                     )}
                 />
@@ -156,10 +149,10 @@ export default function AddProductForm({ navigate }) {
                 <View flex={1}>
                     <TextInput
                         label="Amount"
-                        text={amount.value}
+                        value={amount.value}
                         style={styles.textInput}
                         keyboardType="numeric"
-                        onChangeText={text => handleInputChange('amount', text)}
+                        onChangeText={handleChange('amount')}
                         error={amount.error}
                     />
                     <HelperText type="error" visible={amount.error}>
@@ -172,7 +165,7 @@ export default function AddProductForm({ navigate }) {
                     data={measurements}
                     inputContainerStyle={{ borderBottomWidth: 1, marginTop: 1.5 }}
                     baseColor={theme.colors.disabled}
-                    onChangeText={unit => handleInputChange('measurement', unit)}
+                    onChangeText={handleChange('measurement')}
                 />
             </View>
             <View>
@@ -182,7 +175,7 @@ export default function AddProductForm({ navigate }) {
                     baseColor={type.error ? theme.colors.error : theme.colors.disabled}
                     inputContainerStyle={{ borderBottomWidth: 1 }}
                     data={productTypes}
-                    onChangeText={text => handleInputChange('type', text)}
+                    onChangeText={handleChange('type')}
                 />
                 <HelperText type="error" visible={type.error} style={{ marginTop: -8 }}>
                     {type.error}
@@ -198,7 +191,7 @@ export default function AddProductForm({ navigate }) {
             </Button>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     amountGroup: { flexDirection: 'row', alignItems: 'flex-start' },
@@ -216,3 +209,5 @@ const styles = StyleSheet.create({
         marginTop: 20
     }
 });
+
+export { AddProductForm };

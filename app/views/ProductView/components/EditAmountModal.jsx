@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 });
 
 const EditAmountModal = ({ initialAmount, setIsModalOpen, setAmount }) => {
-    const [_amount, _setAmount] = useState(initialAmount);
+    const [_amount, _setAmount] = useState(initialAmount.toString());
     const [isValid, setIsValid] = useState(true);
 
     const handleCancel = () => {
@@ -19,7 +19,7 @@ const EditAmountModal = ({ initialAmount, setIsModalOpen, setAmount }) => {
     const handleSave = () => {
         if (_amount.length > 0) {
             setIsModalOpen(false);
-            setAmount(_amount);
+            setAmount(parseInt(_amount, 10));
         } else {
             setIsValid(false);
         }

@@ -1,3 +1,7 @@
+const CONFIG = {
+    BACKEND_URL: 'http://localhost:5000'
+};
+
 const ROUTE_NAMES = {
     HOME: 'Home',
     PRODUCT: 'Product',
@@ -28,4 +32,4 @@ const PRODUCT_TYPES = {
     SHRIMP: 'shrimp'
 };
 
-export { ROUTE_NAMES, PRODUCT_TYPES, MEASURING_UNITS };
+export { ROUTE_NAMES, PRODUCT_TYPES, MEASURING_UNITS, CONFIG };
