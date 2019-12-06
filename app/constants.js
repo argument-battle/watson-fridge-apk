@@ -3,7 +3,8 @@ const ROUTE_NAMES = {
     PRODUCT: 'Product',
     ADD_PRODUCT: 'Add product',
     RECIPE_SEARTCH: 'Recipe search',
-    SELECT_PRODUCT: 'Select a product'
+    SELECT_PRODUCT: 'Select a product',
+    BARCODE_SCANNER: 'Scan barcode'
 };
 
 const MEASURING_UNITS = {

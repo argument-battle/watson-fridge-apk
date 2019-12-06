@@ -11,6 +11,7 @@ import { ProductView } from '../views/ProductView/ProductView';
 import { AddProductView } from '../views/AddProductView/AddProductView';
 import { RecipeSearchView } from '../views/RecipeSeatchView/RecipeSearchView';
 import { SelectProductView } from '../views/SelectProductView/SelectProductView';
+import { BarcodeScannerView } from '../views/BarcodeScannerView/BarcodeScannerView';
 
 const StackNavigator = createStackNavigator(
     {
@@ -18,7 +19,8 @@ const StackNavigator = createStackNavigator(
         [ROUTE_NAMES.PRODUCT]: { screen: ProductView },
         [ROUTE_NAMES.ADD_PRODUCT]: { screen: AddProductView },
         [ROUTE_NAMES.RECIPE_SEARTCH]: { screen: RecipeSearchView },
-        [ROUTE_NAMES.SELECT_PRODUCT]: { screen: SelectProductView }
+        [ROUTE_NAMES.SELECT_PRODUCT]: { screen: SelectProductView },
+        [ROUTE_NAMES.BARCODE_SCANNER]: { screen: BarcodeScannerView }
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, HelperText, Colors } from 'react-native-paper';
 import { TextInputMask } from 'react-native-masked-text';
 import { Dropdown } from 'react-native-material-dropdown';
-import { PRODUCT_TYPES, MEASURING_UNITS } from '../../../constants';
+import { PRODUCT_TYPES, MEASURING_UNITS, ROUTE_NAMES } from '../../../constants';
 import { theme } from '../../../Theme';
 import productStorage from '../../../services/localStorage/product';
 
@@ -32,7 +32,7 @@ function parseDate(dateString) {
     return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 }
 
-export default function AddProductForm({ onSuccess }) {
+export default function AddProductForm({ navigate }) {
     const [inputs, setInputs] = useState({
         title: {
             value: '',
@@ -67,7 +67,7 @@ export default function AddProductForm({ onSuccess }) {
     async function handleFormSubmit() {
         if (validateForm()) {
             await saveNewProduct();
-            onSuccess();
+            navigate(ROUTE_NAMES.HOME);
         }
     }
 
@@ -117,7 +117,7 @@ export default function AddProductForm({ onSuccess }) {
     }
 
     return (
-        <View style={styles.form}>
+        <View>
             <View>
                 <TextInput
                     text={title.value}
@@ -202,9 +202,6 @@ export default function AddProductForm({ onSuccess }) {
 
 const styles = StyleSheet.create({
     amountGroup: { flexDirection: 'row', alignItems: 'flex-start' },
-    form: {
-        marginHorizontal: '5%'
-    },
     amountPicker: {
         width: 60,
         height: '100%'
