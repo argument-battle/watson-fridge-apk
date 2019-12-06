@@ -23,7 +23,7 @@ async function getAll() {
         const products = (await AsyncStorage.getItem('products')) || '[]';
         return JSON.parse(products);
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
@@ -35,7 +35,7 @@ async function remove(productId) {
             JSON.stringify(products.filter(product => product._id !== productId))
         );
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
@@ -43,7 +43,7 @@ async function removeAll() {
     try {
         await AsyncStorage.removeItem('products');
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
@@ -55,7 +55,7 @@ async function create(product) {
         await AsyncStorage.setItem('products', JSON.stringify(newProducts));
         return product._id;
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
@@ -66,7 +66,7 @@ async function overwrite(product) {
         const newProducts = [...filteredProducts, product].sort(sortByTitle);
         await AsyncStorage.setItem('products', JSON.stringify(newProducts));
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 

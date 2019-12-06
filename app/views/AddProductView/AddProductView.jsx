@@ -20,15 +20,20 @@ const AddProductView = ({ navigation }) => {
     };
 
     const fetchProduct = async barcode => {
-        setIsLoading(true);
-        const response = await fetch(BACKEND_URL + `/products/${barcode}`);
-        if (response.ok) {
-            const { product } = await response.json();
-            setFetchedProduct(product);
-        } else {
-            setFetchedProduct(null);
+        try {
+            setIsLoading(true);
+            const response = await fetch(BACKEND_URL + `/products/${barcode}`);
+            if (response.ok) {
+                const { product } = await response.json();
+                setFetchedProduct(product);
+            } else {
+                setFetchedProduct(null);
+            }
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     const barcode = getParam('barcode');
