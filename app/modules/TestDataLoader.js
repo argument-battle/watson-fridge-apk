@@ -62,7 +62,7 @@ const productList = [
 
 const loadTestData = async () => {
     for (const product of productList) {
-        await productStorage.set(product);
+        await productStorage.create(product);
     }
 };
 export { loadTestData };

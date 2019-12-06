@@ -72,7 +72,7 @@ export default function AddProductForm({ navigate }) {
     }
 
     async function saveNewProduct() {
-        const productId = await productStorage.set({
+        const productId = await productStorage.create({
             title: title.value,
             amount: amount.value,
             type: type.value,

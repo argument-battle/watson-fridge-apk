@@ -1,6 +1,18 @@
 import { AsyncStorage } from 'react-native';
 import nanoid from 'nanoid/non-secure';
 
+const sortByTitle = (a, b) => {
+    var titleA = a.title.toUpperCase();
+    var titleB = b.title.toUpperCase();
+    if (titleA < titleB) {
+        return -1;
+    }
+    if (titleA > titleB) {
+        return 1;
+    }
+    return 0;
+};
+
 async function get(productId) {
     const products = await getAll();
     return products?.find(product => product._id === productId);
@@ -35,16 +47,27 @@ async function removeAll() {
     }
 }
 
-async function set(product) {
+async function create(product) {
     try {
         const products = (await getAll()) || [];
         product._id = nanoid();
-
-        await AsyncStorage.setItem('products', JSON.stringify([...products, product]));
+        const newProducts = [...products, product].sort(sortByTitle);
+        await AsyncStorage.setItem('products', JSON.stringify(newProducts));
         return product._id;
     } catch (error) {
         console.error(error);
     }
 }
 
-export default { get, getAll, remove, set, removeAll };
+async function overwrite(product) {
+    try {
+        const products = (await getAll()) || [];
+        const filteredProducts = products.filter(e => e._id !== product._id);
+        const newProducts = [...filteredProducts, product].sort(sortByTitle);
+        await AsyncStorage.setItem('products', JSON.stringify(newProducts));
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export default { get, getAll, remove, create, removeAll, overwrite };

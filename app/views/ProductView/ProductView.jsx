@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
-import { IconButton, Colors } from 'react-native-paper';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import productStorage from '../../services/localStorage/product';
 import { ROUTE_NAMES } from '../../constants';
+import { Title } from './components/Title';
+import { Amount } from './components/Amount';
 
 const ProductView = ({ navigation }) => {
-    const id = navigation.getParam('id', '');
+    const { getParam, navigate } = navigation;
+    const id = getParam('id', '');
     const [product, setProduct] = useState({});
+
+    const setAmount = useCallback(
+        amount => {
+            setProduct({ ...product, amount });
+        },
+        [product, setProduct]
+    );
 
     useEffect(() => {
         getProduct(id);
@@ -17,32 +26,12 @@ const ProductView = ({ navigation }) => {
         setProduct(product);
     }
 
-    const { title, amount, measurement } = product;
-
-    const remove = async () => {
+    const onRemoveProduct = useCallback(async () => {
         await productStorage.remove(id);
-        navigation.navigate(ROUTE_NAMES.HOME);
-    };
+        navigate(ROUTE_NAMES.HOME);
+    }, [id, navigate]);
 
-    const handleTrash = async () => {
-        Alert.alert(
-            'Delete product',
-            `Are you sure you want to delete ${title} ?`,
-            [
-                {
-                    text: 'Cancel',
-                    onPress: () => {},
-                    style: 'cancel'
-                },
-                {
-                    text: 'Delete',
-                    onPress: remove,
-                    style: 'destructive'
-                }
-            ],
-            { cancelable: false }
-        );
-    };
+    const { title, amount, measurement } = product;
 
     const expiryDate = new Date(product.expiryDate);
     const day = expiryDate.getDate();
@@ -51,20 +40,10 @@ const ProductView = ({ navigation }) => {
 
     return (
         <View style={styles.product}>
-            <View style={styles.topRow}>
-                <Text id="title" style={styles.title}>
-                    {title}
-                </Text>
-                <IconButton
-                    icon="trash-can"
-                    color={Colors.red500}
-                    size={30}
-                    onPress={handleTrash}
-                />
-            </View>
+            <Title {...{ title, onRemoveProduct }} />
             <Text style={styles.label}>{'Galioja iki'}</Text>
             <Text style={styles.detail}>{`${year}-${month}-${day}`}</Text>
-            <Text style={styles.label}>{`Kiekis`}</Text>
+            <Amount {...{ amount, setAmount }} />
             <Text style={styles.detail}>{`${amount} ${measurement}`}</Text>
         </View>
     );
@@ -76,7 +55,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 38,
-        fontWeight: '500'
+        fontWeight: '500',
+        maxWidth: '90%'
     },
     label: {
         fontSize: 22,
@@ -85,11 +65,6 @@ const styles = StyleSheet.create({
     detail: {
         fontSize: 16,
         marginBottom: 5
-    },
-    topRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
     }
 });
 
