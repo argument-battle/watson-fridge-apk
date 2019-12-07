@@ -1,5 +1,5 @@
 const CONFIG = {
-    BACKEND_URL: 'http://localhost:5000'
+    BACKEND_URL: 'http://watsonfridgebe.patogusauksas.lt'
 };
 
 const ROUTE_NAMES = {

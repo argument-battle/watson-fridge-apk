@@ -18,7 +18,11 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
+            "bundleIdentifier": "com.apk.watsonfridge",
             "supportsTablet": true
+        },
+        "android": {
+            "package": "com.apk.watsonfridge"
         }
     }
 }

@@ -6,6 +6,8 @@
     "scripts": {
         "start": "expo start",
         "android": "expo start --android",
+        "build:android": "expo build:android",
+        "build:ios": "expo build:ios",
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
@@ -35,6 +37,7 @@
         "eslint-plugin-react-hooks": "^2.3.0",
         "expo": "^35.0.0",
         "expo-barcode-scanner": "~7.0.0",
+        "expo-cli": "^3.10.2",
         "expo-permissions": "~7.0.0",
         "nanoid": "^2.1.7",
         "prettier": "^1.19.1",
