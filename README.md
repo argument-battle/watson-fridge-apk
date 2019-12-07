@@ -6,7 +6,7 @@
 
 `npm start`
 
-For barcode scanning functionality to work, run [Backend](https://github.com/niqqq25/Watson-Fridge-BE) asswell
+For barcode scanning functionality to work, run [Backend](https://github.com/voidpumpkin/watson-fridge-be) asswell
 
 ## Code quality
 
