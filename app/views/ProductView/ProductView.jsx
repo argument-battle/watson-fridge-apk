@@ -12,7 +12,9 @@ const ProductView = ({ navigation }) => {
 
     const setAmount = useCallback(
         amount => {
-            setProduct({ ...product, amount });
+            const newProduct = { ...product, amount };
+            setProduct(newProduct);
+            productStorage.overwrite(newProduct);
         },
         [product, setProduct]
     );
